@@ -1,7 +1,7 @@
 #pragma strict
 
-public var maxHealth : float = 100.0;
-public var health : float = 100.0;
+public var maxHealth : float = 3.0; //TODO was 100.0
+public var health : float = 3.0; //TODO was 100.0
 public var regenerateSpeed : float = 0.0;
 public var invincible : boolean = false;
 public var dead : boolean = false;

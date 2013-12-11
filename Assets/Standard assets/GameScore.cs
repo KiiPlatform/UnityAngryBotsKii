@@ -1,11 +1,31 @@
 using UnityEngine;
 using System.Collections.Generic;
+using KiiCorp.Cloud.Storage;
+using KiiCorp.Cloud.Analytics;
 
 
 public class GameScore : MonoBehaviour
 {
-	static GameScore instance;
 	
+	void Awake ()
+	{
+		Debug.Log("GameScore - Awake called.");
+	}
+	
+	
+	void Start ()
+	{
+		Debug.Log("GameScore - Start called.");
+	}
+	
+	static GameScore instance;
+	static KiiUser user;
+	static KiiBucket appBucket;
+	
+	static GameScore()
+	{
+		Debug.Log("Gamescore static");
+	}
 	
 	static GameScore Instance
 	{
@@ -14,6 +34,8 @@ public class GameScore : MonoBehaviour
 			if (instance == null)
 			{
 				instance = (GameScore)FindObjectOfType (typeof (GameScore));
+				if (instance == null)
+					instance = (new GameObject("GameScore")).AddComponent<GameScore>();
 			}
 			
 			return instance;
@@ -50,18 +72,18 @@ public class GameScore : MonoBehaviour
 	
 	
 	#if !UNITY_FLASH
-		public static ICollection<string> KillTypes
+	public static ICollection<string> KillTypes
+	{
+		get
 		{
-			get
+			if (Instance == null)
 			{
-				if (Instance == null)
-				{
-					return new string[0];
-				}
-				
-				return Instance.kills.Keys;
+				return new string[0];
 			}
+			
+			return Instance.kills.Keys;
 		}
+	}
 	#endif
 	
 	
@@ -92,23 +114,46 @@ public class GameScore : MonoBehaviour
 	
 	public static void RegisterDeath (GameObject deadObject)
 	{
+		
 		if (Instance == null)
 		{
 			Debug.Log ("Game score not loaded");
 			return;
 		}
 		
+		Debug.Log ("Game score loaded");
+		Debug.Log("Getting KiiUser");
+		user = KiiUser.CurrentUser;
+		Debug.Log("Creating app bucket");
+		appBucket = Kii.Bucket("game_score");
+		
 		int
 			playerLayer = LayerMask.NameToLayer (Instance.playerLayerName),
 			enemyLayer = LayerMask.NameToLayer (Instance.enemyLayerName);
-			
+		
+		Debug.Log("Creating death object");
+		KiiObject death = appBucket.NewKiiObject();
+		death["user"] = user.Username;
+		death ["time"] = Time.time;
+		
 		if (deadObject.layer == playerLayer)
 		{
 			Instance.deaths++;
+			death["type"] = "Player";
+			death["count"] = Instance.deaths;
+			Debug.Log ("Dead player counted");
+			Debug.Log("Saving death object");
+			death.Save();
 		}
 		else if (deadObject.layer == enemyLayer)
 		{
 			Instance.kills[deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills[deadObject.name] + 1 : 1;
+			death["type"] = "Enemy";
+			death["enemy"] = deadObject.name;
+			death["count"] = Instance.kills[deadObject.name];
+			Debug.Log ("Dead enemy counted");
+			Debug.Log("Saving death object");
+			death.Save();
 		}
 	}
 	
