@@ -36,7 +36,7 @@ public class Autorun : MonoBehaviour {
 		KiiAnalytics.Initialize("776e93b7", "b90ec1a893bd5abaa64ed1a25fbff4d0", KiiAnalytics.Site.US, deviceID);
 		SignUpUser();
 		LogInUser();
-		StoreObject();
+		//StoreObject();
 	}
 	
 	static private String username;
