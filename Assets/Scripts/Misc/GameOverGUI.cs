@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using KiiCorp.Cloud.Analytics;
+using System;
 
 
 public class GameOverGUI : MonoBehaviour
@@ -15,35 +17,31 @@ public class GameOverGUI : MonoBehaviour
 		kBuzzerKillPrize = 100.0f,
 		kSpiderKillPrize = 50.0f,
 		kMechKillPrize = 500.0f;
-
-
+	
 	public float delay = 3.0f, fadeSpeed = 1.0f;
 	public Texture2D menuBackground, scoreHeader, restartButton;
-
-
+	
 	Texture2D background;
 	#if !UNITY_FLASH
-		float backgroundFade = 0.0f, guiFade = 0.0f;
-		int recordedTime;
+	float backgroundFade = 0.0f, guiFade = 0.0f;
+	int recordedTime;
 	#else
 		float backgroundFade = 0.0f, guiFade = 1.0f;
 	#endif
 	int deaths, buzzerKills, spiderKills, mechKills, points;
 	bool restarting = false;
-
-
-	IEnumerator Start ()
-	{
+	
+	IEnumerator Start () {
 		#if !UNITY_FLASH
-			const float kBackgroundTarget = 0.5f, kGUITarget = 1.0f;
+		const float kBackgroundTarget = 0.5f, kGUITarget = 1.0f;
 		#endif
 
 		CalculateScore ();
 
 		#if !UNITY_FLASH
-			Color color = Color.black;
+		Color color = Color.black;
 		#else
-			Color color = new Color (0.0f, 0.0f, 0.0f, 0.5f);
+		Color color = new Color (0.0f, 0.0f, 0.0f, 0.5f);
 		#endif
 		background = new Texture2D (2, 2);
 		background.SetPixels (new Color[] {color, color, color, color});
@@ -52,30 +50,26 @@ public class GameOverGUI : MonoBehaviour
 		yield return new WaitForSeconds (delay);
 
 		#if !UNITY_FLASH
-			do
-			{
-				backgroundFade = Mathf.Clamp (backgroundFade + Time.deltaTime * fadeSpeed, 0.0f, kBackgroundTarget);
-				yield return null;
-			}
-			while (backgroundFade < kBackgroundTarget);
+		do {
+			backgroundFade = Mathf.Clamp (backgroundFade + Time.deltaTime * fadeSpeed, 0.0f, kBackgroundTarget);
+			yield return null;
+		}
+		while (backgroundFade < kBackgroundTarget);
 
-			do
-			{
-				guiFade = Mathf.Clamp (guiFade + Time.deltaTime * fadeSpeed, 0.0f, kGUITarget);
-				yield return null;
-			}
-			while (guiFade < kGUITarget);
+		do {
+			guiFade = Mathf.Clamp (guiFade + Time.deltaTime * fadeSpeed, 0.0f, kGUITarget);
+			yield return null;
+		}
+		while (guiFade < kGUITarget);
 		#endif
 
 		Screen.showCursor = true;
 		Screen.lockCursor = false;
 	}
-
-
-	void CalculateScore ()
-	{
+	
+	void CalculateScore () {
 		#if !UNITY_FLASH
-			recordedTime = (int)GameScore.GameTime;
+		recordedTime = (int)GameScore.GameTime;
 		#endif
 
 		deaths = GameScore.Deaths;
@@ -86,18 +80,37 @@ public class GameOverGUI : MonoBehaviour
 		points = (int)(buzzerKills * kBuzzerKillPrize + spiderKills * kSpiderKillPrize + mechKills * kMechKillPrize);
 
 		if (deaths != 0)
-		{
 			points /= (int)(deaths * kDeathCostFactor);
+
+		// Sending Kii Analytics event for game over stats
+		KiiEvent ev = KiiAnalytics.NewEvent("GameOver");
+		
+		// Set key-value pairs
+		#if !UNITY_FLASH
+		ev["recordedTime"] = recordedTime;
+		#endif
+		ev["deaths"] = deaths;
+		ev["buzzerKills"] =  buzzerKills;
+		ev["spiderKills"] = spiderKills;
+		ev["mechKills"] = mechKills;
+		ev["points"] = points;
+		
+		// Upload Event Data to Kii Cloud
+		try
+		{
+			KiiAnalytics.Upload(ev);
+		}
+		catch (Exception e) 
+		{
+			Debug.LogError("GameOverGUI: Unable to upload game over event to Kii Cloud: " + e.ToString());
 		}
 	}
 
 
-	void OnGUI ()
-	{
+	void OnGUI () {
 		Color preColor = GUI.color;
 
-		if (Event.current.type == EventType.repaint)
-		{
+		if (Event.current.type == EventType.repaint) {
 			GUI.color = new Color (preColor.r, preColor.g, preColor.b, backgroundFade);
 			GUI.DrawTexture (new Rect (0.0f, 0.0f, Screen.width, Screen.height), background);
 		}
@@ -115,47 +128,42 @@ public class GameOverGUI : MonoBehaviour
 		GUI.DrawTexture (new Rect (menuRect.x, menuRect.y, scoreHeader.width, scoreHeader.height), scoreHeader);
 
 		GUILayout.BeginArea (menuRect);
-			GUILayout.Space (kMenuHeaderHeight);
+		GUILayout.Space (kMenuHeaderHeight);
 
-			ScoreLine ("Buzzers disabled", buzzerKills);
-			ScoreLine ("Spiders wrecked", spiderKills);
-			ScoreLine ("Mechs destroyed", mechKills);
+		ScoreLine ("Buzzers disabled", buzzerKills);
+		ScoreLine ("Spiders wrecked", spiderKills);
+		ScoreLine ("Mechs destroyed", mechKills);
 
-			GUILayout.Space (10.0f);
+		GUILayout.Space (10.0f);
 
-			ScoreLine ("Deaths", deaths);
+		ScoreLine ("Deaths", deaths);
 
-			#if !UNITY_FLASH
-				ScoreLine ("Time", string.Format ("{0}m {1}s", (int)recordedTime / 60, (int)recordedTime % 60));
-			#endif
+		#if !UNITY_FLASH
+		ScoreLine ("Time", string.Format ("{0}m {1}s", (int)recordedTime / 60, (int)recordedTime % 60));
+		#endif
 
-			GUILayout.Space (10.0f);
+		GUILayout.Space (10.0f);
 
-			ScoreLine ("Points", points);
+		ScoreLine ("Points", points);
 
+		GUILayout.FlexibleSpace ();
+
+		if (restarting) {
+			GUILayout.BeginHorizontal ();
 			GUILayout.FlexibleSpace ();
+			GUILayout.EndHorizontal ();
+		}
+		else if (MenuButton (restartButton)) {
+			StartCoroutine (DoRestart ());
+		}
 
-			if (restarting)
-			{
-				GUILayout.BeginHorizontal ();
-					GUILayout.FlexibleSpace ();
-				GUILayout.EndHorizontal ();
-			}
-			else if (MenuButton (restartButton))
-			{
-				StartCoroutine (DoRestart ());
-			}
-
-			GUILayout.FlexibleSpace ();
-
+		GUILayout.FlexibleSpace ();
 		GUILayout.EndArea ();
-
 		GUI.color = preColor;
 	}
 
 
-	IEnumerator DoRestart ()
-	{
+	IEnumerator DoRestart () {
 		yield return null;
 		restarting = true;
 		yield return null;
@@ -163,39 +171,35 @@ public class GameOverGUI : MonoBehaviour
 	}
 
 
-	void ScoreLine (string label, object value)
-	{
+	void ScoreLine (string label, object value) {
 		GUILayout.BeginHorizontal ();
-			GUILayout.Label (label);
-			GUILayout.FlexibleSpace ();
-			GUILayout.Label (value.ToString ());
+		GUILayout.Label (label);
+		GUILayout.FlexibleSpace ();
+		GUILayout.Label (value.ToString ());
 		GUILayout.EndHorizontal ();
 	}
 
 
-	bool MenuButton (Texture2D icon)
-	{
+	bool MenuButton (Texture2D icon) {
 		bool wasPressed = false;
 
 		GUILayout.BeginHorizontal ();
-			GUILayout.FlexibleSpace ();
+		GUILayout.FlexibleSpace ();
 
-			Rect rect = GUILayoutUtility.GetRect (kButtonWidth, kButtonHeight, GUILayout.Width (kButtonWidth), GUILayout.Height (kButtonHeight));
+		Rect rect = GUILayoutUtility.GetRect (kButtonWidth, kButtonHeight, GUILayout.Width (kButtonWidth), GUILayout.Height (kButtonHeight));
 
-			switch (Event.current.type)
-			{
-				case EventType.MouseUp:
-					if (rect.Contains (Event.current.mousePosition))
-					{
-						wasPressed = true;
-					}
+		switch (Event.current.type){
+			case EventType.MouseUp:
+				if (rect.Contains (Event.current.mousePosition))
+					wasPressed = true;
+
 				break;
-				case EventType.Repaint:
-					GUI.DrawTexture (rect, icon);
+			case EventType.Repaint:
+				GUI.DrawTexture (rect, icon);
 				break;
-			}
+		}
 
-			GUILayout.FlexibleSpace ();
+		GUILayout.FlexibleSpace ();
 		GUILayout.EndHorizontal ();
 
 		return wasPressed;
