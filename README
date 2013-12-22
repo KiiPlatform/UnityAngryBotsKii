@@ -4,6 +4,7 @@ to use Kii mobile backend-as-a-service.
 For more info take a look at these files:
 Assets/Scripts/Backend/*
 Assets/Standard assets/GameScore.cs
+Assets/Scripts/Misc/GameOverGUI.cs
 
 Kii Features used:
 
