@@ -19,7 +19,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: b52fc0f57a2094cd687bf396c7a9fd6d, type: 3}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: .778480411, y: 0}
+          m_Offset: {x: .881964207, y: 0}
       data:
         first:
           name: _NoiseTex

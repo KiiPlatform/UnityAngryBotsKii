@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using KiiCorp.Cloud.Storage;
 using KiiCorp.Cloud.Analytics;
+using System;
 
 
 public class GameScore : MonoBehaviour
@@ -135,26 +136,36 @@ public class GameScore : MonoBehaviour
 		KiiObject death = appBucket.NewKiiObject();
 		death["user"] = user.Username;
 		death ["time"] = Time.time;
-		
-		if (deadObject.layer == playerLayer)
-		{
+
+		if (deadObject.layer == playerLayer) {
 			Instance.deaths++;
-			death["type"] = "Player";
-			death["count"] = Instance.deaths;
+			death ["type"] = "Player";
+			death ["count"] = Instance.deaths;
 			Debug.Log ("Dead player counted");
-			Debug.Log("Saving death object");
-			death.Save();
-		}
-		else if (deadObject.layer == enemyLayer)
-		{
-			Instance.kills[deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills[deadObject.name] + 1 : 1;
-			death["type"] = "Enemy";
-			death["enemy"] = deadObject.name;
-			death["count"] = Instance.kills[deadObject.name];
+			Debug.Log ("Saving death object");
+		} else if (deadObject.layer == enemyLayer) {
+			Instance.kills [deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills [deadObject.name] + 1 : 1;
+			death ["type"] = "Enemy";
+			death ["enemy"] = deadObject.name;
+			death ["count"] = Instance.kills [deadObject.name];
 			Debug.Log ("Dead enemy counted");
-			Debug.Log("Saving death object");
-			death.Save();
+			Debug.Log ("Saving death object");
+		} else {
+			Instance.kills [deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills [deadObject.name] + 1 : 1;
+			death ["type"] = "Unknown";
+			death ["enemy"] = deadObject.name;
+			death ["count"] = Instance.kills [deadObject.name];
+			Debug.Log ("Dead entity counted");
+			Debug.Log ("Saving death object");
 		}
+
+		death.Save((KiiObject obj, Exception e) => {
+			if (e != null){
+				Debug.Log ("GameScore: Failed to create death object: " + e.ToString());
+			} else {
+				Debug.Log ("GameScore: Create death object succeeded");
+			}
+		});
 	}
 	
 	
