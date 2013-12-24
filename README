@@ -2,6 +2,7 @@ The official Unity 3D 4.3 AngryBots demo game has been modified
 to use Kii mobile backend-as-a-service.
 
 For more info take a look at these files:
+
 Assets/Scripts/Backend/*
 Assets/Standard assets/GameScore.cs
 Assets/Scripts/Misc/GameOverGUI.cs
@@ -11,6 +12,7 @@ Kii Features used:
 - User management
 -- User Sign-in via dedicated GUI
 -- User Registration via dedicated GUI
+- Data management
 -- Object creation at application level bucket
    (saving death data for player and enemies)
 -- Object creation at application level bucket --> COMING SOON 

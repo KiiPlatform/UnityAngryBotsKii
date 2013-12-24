@@ -32,7 +32,7 @@ public class KiiInit : MonoBehaviour {
 		string id = PlayerPrefs.GetString("deviceId", null);
 		if (id == null || id.Length == 0)
 		{
-			id = System.Guid.NewGuid().ToString();
+			id = Guid.NewGuid().ToString();
 		}
 		return id;
 	}
