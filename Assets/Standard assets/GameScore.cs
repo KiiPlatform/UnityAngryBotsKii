@@ -7,7 +7,7 @@ using System;
 
 public class GameScore : MonoBehaviour
 {
-	
+
 	void Awake ()
 	{
 		Debug.Log("GameScore - Awake called.");
@@ -18,7 +18,8 @@ public class GameScore : MonoBehaviour
 	{
 		Debug.Log("GameScore - Start called.");
 	}
-	
+
+	static string BUCKET_NAME = "game_score";
 	static GameScore instance;
 	static KiiUser user;
 	static KiiBucket appBucket;
@@ -28,7 +29,7 @@ public class GameScore : MonoBehaviour
 		Debug.Log("Gamescore static");
 	}
 	
-	static GameScore Instance
+	public static GameScore Instance
 	{
 		get
 		{
@@ -38,7 +39,7 @@ public class GameScore : MonoBehaviour
 				if (instance == null)
 					instance = (new GameObject("GameScore")).AddComponent<GameScore>();
 			}
-			
+			Debug.Log ("Game score loaded");
 			return instance;
 		}
 	}
@@ -121,12 +122,11 @@ public class GameScore : MonoBehaviour
 			Debug.Log ("Game score not loaded");
 			return;
 		}
-		
-		Debug.Log ("Game score loaded");
+
 		Debug.Log("Getting KiiUser");
 		user = KiiUser.CurrentUser;
 		Debug.Log("Creating app bucket");
-		appBucket = Kii.Bucket("game_score");
+		appBucket = Kii.Bucket(BUCKET_NAME);
 		
 		int
 			playerLayer = LayerMask.NameToLayer (Instance.playerLayerName),
@@ -149,14 +149,14 @@ public class GameScore : MonoBehaviour
 			death ["enemy"] = deadObject.name;
 			death ["count"] = Instance.kills [deadObject.name];
 			Debug.Log ("Dead enemy counted");
-			Debug.Log ("Saving death object");
+			Debug.Log ("Saving death object...");
 		} else {
 			Instance.kills [deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills [deadObject.name] + 1 : 1;
 			death ["type"] = "Unknown";
 			death ["enemy"] = deadObject.name;
 			death ["count"] = Instance.kills [deadObject.name];
 			Debug.Log ("Dead entity counted");
-			Debug.Log ("Saving death object");
+			Debug.Log ("Saving death object...");
 		}
 
 		death.Save((KiiObject obj, Exception e) => {
@@ -175,5 +175,48 @@ public class GameScore : MonoBehaviour
 		{
 			startTime = Time.time;
 		}
+	}
+
+	public static void RegisterDamage(string target, float amount, float totalHealth, float gameTime, Vector3 direction){
+		Debug.Log("Getting KiiUser");
+		user = KiiUser.CurrentUser;
+		Debug.Log("Creating app bucket");
+		appBucket = Kii.Bucket(BUCKET_NAME);
+		Debug.Log("Creating damage object");
+		KiiObject damage = appBucket.NewKiiObject();
+		damage ["user"] = user.Username;
+		damage ["target"] = target;
+		damage ["time"] = gameTime;
+		damage ["health"] = totalHealth;
+		damage ["amount"] = amount;
+		damage ["direction"] = direction;
+		Debug.Log ("Saving damage object...");
+		damage.Save((KiiObject obj, Exception e) => {
+			if (e != null){
+				Debug.Log ("GameScore: Failed to create damage object: " + e.ToString());
+			} else {
+				Debug.Log ("GameScore: Create damage object succeeded");
+			}
+		});
+	}
+
+	// Send Analytics event for end of level
+	public static void EndOfLevel(float gameTime){
+		Debug.Log("Sending end of level event...");
+		KiiEvent ev = KiiAnalytics.NewEvent("EndOfLevel");
+		
+		// Set key-value pairs
+		ev ["user"] = user.Username;
+		ev ["time"] = gameTime;
+		
+		// Upload Event Data to Kii Cloud
+		try
+		{
+			KiiAnalytics.Upload(ev);
+		}
+		catch (Exception e) 
+		{
+			Debug.LogError("GameScore: Unable to upload gend of level event to Kii Cloud: " + e.ToString());
+		}		
 	}
 }

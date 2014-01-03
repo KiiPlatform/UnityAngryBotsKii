@@ -83,6 +83,7 @@ public class GameOverGUI : MonoBehaviour
 			points /= (int)(deaths * kDeathCostFactor);
 
 		// Sending Kii Analytics event for game over stats
+		Debug.Log ("Sending game over event...");
 		KiiEvent ev = KiiAnalytics.NewEvent("GameOver");
 		
 		// Set key-value pairs
@@ -103,7 +104,7 @@ public class GameOverGUI : MonoBehaviour
 		catch (Exception e) 
 		{
 			Debug.LogError("GameOverGUI: Unable to upload game over event to Kii Cloud: " + e.ToString());
-		}
+		}		
 	}
 
 

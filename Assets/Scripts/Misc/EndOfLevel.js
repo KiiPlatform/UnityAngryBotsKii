@@ -15,6 +15,8 @@ function OnTriggerEnter (other : Collider) {
 		var playerMove : PlayerMoveController = other.gameObject.GetComponent.<PlayerMoveController> ();
 		playerMove.enabled = false;
 		
+		GameScore.EndOfLevel(Time.time);
+		
 		yield;
 		
 		var timeWaited : float = 0.0f;

@@ -1,7 +1,7 @@
 #pragma strict
 
-public var maxHealth : float = 3.0; //TODO was 100.0
-public var health : float = 3.0; //TODO was 100.0
+public var maxHealth : float = 100.0;
+public var health : float = 100.0;
 public var regenerateSpeed : float = 0.0;
 public var invincible : boolean = false;
 public var dead : boolean = false;
@@ -68,6 +68,11 @@ function OnDamage (amount : float, fromDirection : Vector3) {
 	health -= amount;
 	damageSignals.SendSignals (this);
 	lastDamageTime = Time.time;
+	
+	var target = gameObject.tag;
+	if(target != "Player")
+		target = "Enemy";
+	GameScore.RegisterDamage(target, amount, health, lastDamageTime, fromDirection);
 
 	// Enable so the Update function will be called
 	// if regeneration is enabled

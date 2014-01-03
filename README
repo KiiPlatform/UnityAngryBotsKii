@@ -14,14 +14,12 @@ Kii Features used:
 -- User Registration via dedicated GUI
 - Data management
 -- Object creation at application level bucket
-   (saving death data for player and enemies)
--- Object creation at application level bucket --> COMING SOON 
-   (saving end of level data)
+   (saving damage and death data for player and enemies)
 -- Object retrieval via Queries --> COMING SOON
 - Analytics
 -- Event based Analytics
-   (saving end of game (game over) statistics)
--- Data based Analytics --> COMING SOON 
+   (saving end of level and end of game (game over) statistics)
+-- Data based Analytics
    (over death data calculating average time for 1st player death, and avg time of level completion)
 - Group Management --> COMING SOON
 - Geolocation- -> COMING SOON
