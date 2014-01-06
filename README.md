@@ -1,3 +1,5 @@
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/KiiPlatform/unityangrybotskii/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 The official Unity 3D 4.3 AngryBots demo game has been modified 
 to use Kii mobile backend-as-a-service.
 

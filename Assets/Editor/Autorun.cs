@@ -11,13 +11,13 @@ public class Autorun : MonoBehaviour {
 	
 	void Awake ()
 	{
-		Debug.Log("Autorun - Awake called.");
+		//Debug.Log("Autorun - Awake called.");
 	}
 	
 	// Use this for initialization
 	void Start ()
 	{
-		Debug.Log("Autorun - Start called.");
+		//Debug.Log("Autorun - Start called.");
 	}
 
 	// Update is called once per frame
@@ -27,7 +27,7 @@ public class Autorun : MonoBehaviour {
 	
 	static Autorun()
 	{
-		Debug.Log("Autorun - Constructor called.");
+		//Debug.Log("Autorun - Constructor called.");
 	}
 
 }

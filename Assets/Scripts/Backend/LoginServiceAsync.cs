@@ -15,7 +15,7 @@ public class LoginServiceAsync : MonoBehaviour {
 		KiiUser.LogIn(loginData.username, loginData.password, (KiiUser user, Exception e) => {
 			if (e != null) {
 				response.error = true;
-				response.message = "Login falied: " + e.ToString();
+				response.message = "Login failed: " + e.ToString();
 				Debug.Log("Login falied: " + e.ToString());
 			} else {
 				response.error = false;
