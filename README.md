@@ -5,23 +5,23 @@ to use Kii mobile backend-as-a-service.
 
 For more info take a look at these files:
 
-Assets/Scripts/Backend/*
-Assets/Standard assets/GameScore.cs
-Assets/Scripts/Misc/GameOverGUI.cs
+- Assets/Scripts/Backend/*
+- Assets/Standard assets/GameScore.cs
+- Assets/Scripts/Misc/GameOverGUI.cs
 
 Kii Features used:
 
 - User management
--- User Sign-in via dedicated GUI
--- User Registration via dedicated GUI
+    - User Sign-in via dedicated GUI
+    - User Registration via dedicated GUI
 - Data management
--- Object creation at application level bucket
-   (saving damage and death data for player and enemies)
--- Object retrieval via Queries --> COMING SOON
+    - Object creation at application level bucket
+    (saving damage and death data for player and enemies)
+    - Object retrieval via Queries --> COMING SOON
 - Analytics
--- Event based Analytics
-   (saving end of level and end of game (game over) statistics)
--- Data based Analytics
-   (over death data calculating average time for 1st player death, and avg time of level completion)
+    - Event based Analytics
+    (saving end of level and end of game (game over) statistics)
+    - Data based Analytics
+    (over death data calculating average time for 1st player death, and avg time of level completion)
 - Group Management --> COMING SOON
 - Geolocation- -> COMING SOON
