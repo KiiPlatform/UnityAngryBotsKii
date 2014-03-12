@@ -5,6 +5,8 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
+Assets/AssetStoreTools*
+Assets/Plugins/KiiConfig.txt*
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #

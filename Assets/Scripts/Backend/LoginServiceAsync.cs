@@ -11,19 +11,23 @@ public class LoginServiceAsync : MonoBehaviour {
 	public void sendLoginData(LoginData loginData, MethodReferenceWithResponse responseHandler) {
 		
 		Response response = (Response)gameObject.AddComponent("Response");
+		bool inHandler = true;
 		Debug.Log("Attempting login...");
 		KiiUser.LogIn(loginData.username, loginData.password, (KiiUser user, Exception e) => {
 			if (e != null) {
 				response.error = true;
 				response.message = "Login failed: " + e.ToString();
-				Debug.Log("Login falied: " + e.ToString());
+				inHandler = false;
+				Debug.Log("Login failed: " + e.ToString());
 			} else {
 				response.error = false;
 				response.message = "";
+				inHandler = false;
 				Debug.Log("Login successful");
 			}
 		});
 		// Calling response handler
+		while(inHandler) {}
 		responseHandler(response);
 	} 
 }

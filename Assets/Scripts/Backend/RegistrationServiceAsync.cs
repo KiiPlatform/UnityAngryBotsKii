@@ -10,7 +10,8 @@ public class RegistrationServiceAsync : MonoBehaviour {
 	public void sendRegistrationData(RegistrationData registrationData, MethodReferenceWithResponse responseHandler) {
 		
 		Response response = (Response)gameObject.AddComponent("Response"); 
-
+		bool inHandler = true;
+		Debug.Log("Attempting registration...");
 		if (registrationData.password.Equals (registrationData.passwordConfirm)) {
 			Debug.Log("Creating user builder");
 			KiiUser.Builder builder;
@@ -22,18 +23,22 @@ public class RegistrationServiceAsync : MonoBehaviour {
 				if (e != null) {
 					response.error = true;
 					response.message = "Signup failed: " + e.ToString();
+					inHandler = false;
 					Debug.Log ("Signup failed: " + e.ToString());
 				} else {
 					response.error = false;
 					response.message = "";
+					inHandler = false;
 					Debug.Log ("Signup succeeded");
 				}
 			});
 		} else {
 			response.error = true;
 			response.message = "Passwords don't match!";
+			inHandler = false;
 		}
 		// Calling response handler:
+		while(inHandler) {}
 		responseHandler(response);
 	}
 }

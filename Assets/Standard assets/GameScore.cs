@@ -10,13 +10,13 @@ public class GameScore : MonoBehaviour
 
 	void Awake ()
 	{
-		Debug.Log("GameScore - Awake called.");
+
 	}
 	
 	
 	void Start ()
 	{
-		Debug.Log("GameScore - Start called.");
+
 	}
 
 	static string BUCKET_NAME = "game_score";
@@ -26,7 +26,7 @@ public class GameScore : MonoBehaviour
 	
 	static GameScore()
 	{
-		Debug.Log("Gamescore static");
+		Debug.Log("Gamescore - Static constructor");
 	}
 	
 	public static GameScore Instance
@@ -123,15 +123,27 @@ public class GameScore : MonoBehaviour
 			return;
 		}
 
-		Debug.Log("Getting KiiUser");
-		user = KiiUser.CurrentUser;
-		Debug.Log("Creating app bucket");
-		appBucket = Kii.Bucket(BUCKET_NAME);
-		
 		int
 			playerLayer = LayerMask.NameToLayer (Instance.playerLayerName),
 			enemyLayer = LayerMask.NameToLayer (Instance.enemyLayerName);
-		
+
+		Debug.Log("Getting KiiUser");
+		user = KiiUser.CurrentUser;
+
+		if(user == null){
+			if (deadObject.layer == playerLayer) {
+				Instance.deaths++;
+			} else if (deadObject.layer == enemyLayer) {
+				Instance.kills [deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills [deadObject.name] + 1 : 1;
+			} else {
+				Instance.kills [deadObject.name] = Instance.kills.ContainsKey (deadObject.name) ? Instance.kills [deadObject.name] + 1 : 1;
+			}
+			return;
+		}
+
+		Debug.Log("Creating app bucket");
+		appBucket = Kii.Bucket(BUCKET_NAME);
+
 		Debug.Log("Creating death object");
 		KiiObject death = appBucket.NewKiiObject();
 		death["user"] = user.Username;
@@ -180,6 +192,8 @@ public class GameScore : MonoBehaviour
 	public static void RegisterDamage(string target, float amount, float totalHealth, float gameTime, Vector3 direction){
 		Debug.Log("Getting KiiUser");
 		user = KiiUser.CurrentUser;
+		if(user == null)
+			return;
 		Debug.Log("Creating app bucket");
 		appBucket = Kii.Bucket(BUCKET_NAME);
 		Debug.Log("Creating damage object");
@@ -200,7 +214,7 @@ public class GameScore : MonoBehaviour
 		});
 	}
 
-	// Send Analytics event for end of level
+	// Send Analytics event for end of level time
 	public static void EndOfLevel(float gameTime){
 		Debug.Log("Sending end of level event...");
 		KiiEvent ev = KiiAnalytics.NewEvent("EndOfLevel");

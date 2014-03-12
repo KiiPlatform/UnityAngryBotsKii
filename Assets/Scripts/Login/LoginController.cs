@@ -38,7 +38,6 @@ public class LoginController : MonoBehaviour {
 	void Start () {   
 		//init components
 		viewByName = new Hashtable ();
-		gameObject.AddComponent("KiiInit");
 		loginService = (LoginServiceAsync)gameObject.AddComponent("LoginServiceAsync");
 		registrationService = (RegistrationServiceAsync)gameObject.AddComponent("RegistrationServiceAsync");
 		loginView = (LoginView)gameObject.AddComponent("LoginView");
