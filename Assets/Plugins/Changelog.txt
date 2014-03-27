@@ -1,0 +1,53 @@
+# Unity Cloud Storage SDK Changes:
+
+## Release v1.6.1.0 (March 26, 2014 / File MD5: 2e679d58d5cce441bce97c17f6cc9471)
+This SDK is hotfix of v1.6.0.0
+Fixed Facebook login problem.
+
+## Release v1.6.0.0 (March 20, 2014 / File MD5: 65134937d3a35fb1dc0cc5bbaa0f3386)
+### New Feature
+- Upload/ Download/ Delete/ Publish Object body.
+Now you can attach arbitrary data to the object. (binary file, etc.)
+
+## Release v1.5.0.0 (Feburary 28, 2014 / File MD5: 6b52eccdff90d38e1467be828ead91fc)
+### New Feature
+- AB Testing
+- Now Cloud SDK contains Analytics SDK.
+
+### Bug Fix
+- Fixed Async API issue in iOS.
+
+## Release v1.4.0.0 (January 28, 2014 / File MD5: c1c83ad8d560504361fe694ecdea3742)
+
+### New API
+- Add APIs enable login with Facebook Token.
+
+## Release v1.3.0.0 (December 13, 2013 / File MD5: 24c9eff8e0903bfe6469c916fc8d0378)
+
+### New API
+- Add asynchronous APIs.
+- Introduce new Exceptions which inherit the CloudException.
+
+### Improvement
+- CloudException#ToString() shows server error response.
+- Change KiiGroup#ListMembers return type from List<T> to IList<T>.
+
+## Release v1.2.0.0 (November 7, 2013 / File MD5: 0c5bc31a889ee6538e043fa56e3abe38)
+
+### New API
+- Set/get Geo location of KiiObject.
+- Query objects with a given GeoBox.
+- Query objects with a given GeoDistance.
+
+### Improvement
+- Add Kii servers as trusted root.
+
+## Release v1.1.0.0 (September 19, 2013 / File MD5: 0f41d80f9f6fe67961a09d7413f76e30)
+
+China server is supported.
+If you want to use the server in China, please set 
+Kii.Site.CN to Kii.Initialize.
+
+## Release v1.0.0.0 (August 21, 2013 / File MD5: 7d26e00b9fc92fac4601319caa968bd4)
+
+Initial Release!
