@@ -1,5 +1,12 @@
 # Unity Cloud Storage SDK Changes:
 
+## Release v1.7.0.0 (April 24, 2014 / File MD5: 2f221d84770e7e1935254acf9c379590)
+### New features
+- Push Notification
+
+### Improvements
+- CloudException#ToString() shows longer error message received from server.
+
 ## Release v1.6.1.0 (March 26, 2014 / File MD5: 2e679d58d5cce441bce97c17f6cc9471)
 This SDK is hotfix of v1.6.0.0
 Fixed Facebook login problem.
