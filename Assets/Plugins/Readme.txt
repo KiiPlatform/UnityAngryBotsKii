@@ -14,17 +14,12 @@ your backend.
 sections):
 http://documentation.kii.com/en/starts/unity/
 
-4) Set keys from step 3 in your Unity project by choosing one of these
-options:
-  a) Go to "Kii Game Cloud" editor menu and setup your keys there
-  b) Edit file Assets/Plugins/KiiConfig.txt and add your keys there
-  c) Replace those keys in file KiiAutoInitialize.cs in the
-  Kii.Initialize() method directly
-Important: options a) and b) will only work in Editor mode. If you want
-to initialize Kii when building for a specific platform you'll have to
-use c). If you're bulding for Android make sure the Stripping level in
-your project settings is set to "Disabled" and that the Internet setting
-is set to "Require" (not "Auto").
+4) Set keys from step 3 in your Unity project by following this guide:
+http://documentation.kii.com/en/guides/unity/quickstart/adding-kii-cloud-sdk-to-your-application/
+
+5) If you want to support push notifications in your game when deploying 
+to Android or iOS then follow this guide:
+http://documentation.kii.com/en/guides/unity/quickstart/adding-kii-push-notification-to-your-application/
 
 Want more info?
 ================

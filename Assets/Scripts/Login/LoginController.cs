@@ -26,10 +26,10 @@ public class LoginController : MonoBehaviour {
 	RegistrationView registrationView;
 	
 	// Login service:
-	LoginServiceAsync loginService;
+	LoginService loginService;
 	
 	// Registration service:
-	RegistrationServiceAsync registrationService;
+	RegistrationService registrationService;
 	
 	// Do we need block UI:
 	bool blockUI = false;
@@ -38,8 +38,8 @@ public class LoginController : MonoBehaviour {
 	void Start () {   
 		//init components
 		viewByName = new Hashtable ();
-		loginService = (LoginServiceAsync)gameObject.AddComponent("LoginServiceAsync");
-		registrationService = (RegistrationServiceAsync)gameObject.AddComponent("RegistrationServiceAsync");
+		loginService = (LoginService)gameObject.AddComponent("LoginService");
+		registrationService = (RegistrationService)gameObject.AddComponent("RegistrationService");
 		loginView = (LoginView)gameObject.AddComponent("LoginView");
 		registrationView = (RegistrationView)gameObject.AddComponent("RegistrationView");
 
@@ -113,7 +113,7 @@ public class LoginController : MonoBehaviour {
 			GUI.Box(new Rect((screenWidth - 200)/2, (screenHeight - 60)/2, 200, 60), "Wait...");
 		}
 
-		if (asyncOp != null) {
+		if (asyncOp != null && !asyncOp.isDone) {
 			GUIStyle style = new GUIStyle( GUI.skin.box );
 			style.normal.background = MakeTex( 2, 2, new Color( 0f, 1f, 0f, 0.5f ) );
 			GUI.Box (new Rect(0, Screen.height - 40, asyncOp.progress * Screen.width, 40), "", style);

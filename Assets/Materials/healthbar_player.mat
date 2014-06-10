@@ -23,12 +23,12 @@ Material:
     m_Floats:
       data:
         first:
-          name: _InvFade
-        second: 1
-      data:
-        first:
           name: _SelfIllumination
         second: 2
+      data:
+        first:
+          name: _InvFade
+        second: 1
     m_Colors:
       data:
         first:

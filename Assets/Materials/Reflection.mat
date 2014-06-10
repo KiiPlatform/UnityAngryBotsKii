@@ -22,13 +22,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Normal
-        second:
-          m_Texture: {fileID: 2800000, guid: 7476f264231e84484941e13bfc3fd46d, type: 3}
-          m_Scale: {x: 2, y: 2.29999995}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Cube
         second:
           m_Texture: {fileID: 8900000, guid: b7bb3ff99e74141e3858bfeb7098a3ce, type: 2}
@@ -40,6 +33,13 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: f118120a67e7e4f588d865a4ec2ad6b4, type: 3}
           m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Normal
+        second:
+          m_Texture: {fileID: 2800000, guid: 7476f264231e84484941e13bfc3fd46d, type: 3}
+          m_Scale: {x: 2, y: 2.29999995}
           m_Offset: {x: 0, y: 0}
       data:
         first:

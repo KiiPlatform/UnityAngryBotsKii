@@ -26,7 +26,10 @@ public class LoginView : MonoBehaviour, ViewInterface {
 	private bool blockUI = false;
 	
 	public void render() {
-		
+
+		if(Application.loadedLevel == 1)
+			return;
+
 		int screenWidth = Screen.width;
 		int screenHeight = Screen.height;
 		
@@ -73,9 +76,7 @@ public class LoginView : MonoBehaviour, ViewInterface {
 			}
 		}
 		// Enabling UI: 
-		
 		GUI.enabled = true;
-		
 	}
 	
 	public void setBlockUI(bool blockUI) {

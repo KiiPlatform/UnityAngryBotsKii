@@ -1,5 +1,39 @@
 # Unity Cloud Storage SDK Changes:
 
+## Release v1.8.2.0 (May 29, 2014 / File MD5: 4042c309d8ac1beb354cc50a6e64721e)
+
+### Bug fixes
+- Assebmly Load failed on Web Player
+- Object upload failed due to WWW cache (on iOS).
+- Unable to send POST request which doesn't have body.
+- Unable to find user with email address (on iOS).
+- Proper sub class of CloudException was not thrown when request failed.
+- Analytics event upload failed.
+- KiiInitializeBehaviour was unable to accept Singapore site.
+
+## Release v1.8.1.0 (May 23, 2014 / File MD5: a9a3c6b375af2b0f23d173c56ae326cc)
+
+### Bug fixes
+- Fixed a bug that ABTesting is not working.
+
+## Release v1.8.0.0 (May 22, 2014 / File MD5: 4d0c155fdd95d11a8f5e4945f2805539)
+### New features
+- Server code execution
+- Counting objects in bucket
+- Analytics Async APIs
+- Site SG is available.
+
+### Improvements
+- Way to initialize SDK has changed.
+- Http Client is changed from HttpWebRequest to Unity WWW.
+- Cloud SDK and Analytics SDK has been merged.
+- Sending x-kii-sdk header (for internal use.)
+- WebPlayer is supported.
+- Code Stripping is supported.
+- Async callback are called from the UI thread.
+- Blocking APIs are deprecated.
+- KiiObjectBodyDownloadCallback is deprecated (use KiiObjectBodyProgressCallback instead.)
+
 ## Release v1.7.0.0 (April 24, 2014 / File MD5: 2f221d84770e7e1935254acf9c379590)
 ### New features
 - Push Notification

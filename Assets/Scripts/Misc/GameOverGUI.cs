@@ -95,16 +95,17 @@ public class GameOverGUI : MonoBehaviour
 		ev["spiderKills"] = spiderKills;
 		ev["mechKills"] = mechKills;
 		ev["points"] = points;
-		
+
 		// Upload Event Data to Kii Cloud
-		try
-		{
-			KiiAnalytics.Upload(ev);
-		}
-		catch (Exception e) 
-		{
-			Debug.LogError("GameOverGUI: Unable to upload game over event to Kii Cloud: " + e.ToString());
-		}		
+		KiiAnalytics.Upload((Exception e) => {
+			if (e == null)
+			{
+				Debug.Log ("GameOverGU: Analytics game over event upload successful");
+			} else {
+				Debug.Log ("GameOverGUI: Unable to upload game over event to Kii Cloud: " + e.ToString());
+			}
+			
+		}, ev);
 	}
 
 

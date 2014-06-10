@@ -175,6 +175,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 593441425}
+  - 114: {fileID: 593441427}
   - 114: {fileID: 593441426}
   m_Layer: 0
   m_Name: Login
@@ -501,3 +502,18 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+--- !u!114 &593441427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 593441424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1327372794, guid: db3218fda900a4f25b8ab883dd95965d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AppID: 776e93b7
+  AppKey: b90ec1a893bd5abaa64ed1a25fbff4d0
+  Site: 1
+  ServerUrl: 

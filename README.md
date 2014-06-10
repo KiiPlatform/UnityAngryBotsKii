@@ -15,13 +15,10 @@ Kii Features used:
 - Data management
     - Object creation at application level bucket
     (saving damage and death data for player and enemies)
-    - Object retrieval via Queries --> COMING SOON
 - Analytics
     - Event based Analytics
     (saving end of level and end of game (game over) statistics)
     - Data based Analytics
     (over death data calculating average time for 1st player death, and avg time of level completion)
-- Group Management --> COMING SOON
-- Geolocation- -> COMING SOON
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/KiiPlatform/unityangrybotskii/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

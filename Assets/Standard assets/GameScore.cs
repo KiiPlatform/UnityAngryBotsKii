@@ -222,15 +222,16 @@ public class GameScore : MonoBehaviour
 		// Set key-value pairs
 		ev ["user"] = user.Username;
 		ev ["time"] = gameTime;
-		
+
 		// Upload Event Data to Kii Cloud
-		try
-		{
-			KiiAnalytics.Upload(ev);
-		}
-		catch (Exception e) 
-		{
-			Debug.LogError("GameScore: Unable to upload gend of level event to Kii Cloud: " + e.ToString());
-		}		
+		KiiAnalytics.Upload((Exception e) => {
+			if (e == null)
+			{
+				Debug.Log ("GameScore: Analytics end-of-level event upload successful");
+			} else {
+				Debug.Log ("GameScore: Unable to upload end-of-level event to Kii Cloud:  " + e.ToString());
+			}
+			
+		}, ev);
 	}
 }

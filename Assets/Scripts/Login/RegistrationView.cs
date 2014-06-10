@@ -22,7 +22,10 @@ public class RegistrationView : MonoBehaviour, ViewInterface {
 	
 	private bool blockUI = false;
 	
-	public void render() { 
+	public void render() {
+
+		if(Application.loadedLevel == 1)
+			return;
 		
 		int screenWidth = Screen.width;
 		int screenHeight = Screen.height;
