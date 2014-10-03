@@ -516,4 +516,5 @@ MonoBehaviour:
   AppID: 776e93b7
   AppKey: b90ec1a893bd5abaa64ed1a25fbff4d0
   Site: 1
+  apiTimeout: 30
   ServerUrl: 

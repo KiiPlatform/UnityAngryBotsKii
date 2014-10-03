@@ -1,94 +1,192 @@
 # Unity Cloud Storage SDK Changes:
 
-## Release v1.8.2.0 (May 29, 2014 / File MD5: 4042c309d8ac1beb354cc50a6e64721e)
 
-### Bug fixes
-- Assebmly Load failed on Web Player
-- Object upload failed due to WWW cache (on iOS).
-- Unable to send POST request which doesn't have body.
-- Unable to find user with email address (on iOS).
-- Proper sub class of CloudException was not thrown when request failed.
-- Analytics event upload failed.
-- KiiInitializeBehaviour was unable to accept Singapore site.
+v2.2.0 (2 Oct, 2014)
 
-## Release v1.8.1.0 (May 23, 2014 / File MD5: a9a3c6b375af2b0f23d173c56ae326cc)
+md5: 904f2c9823d368b8d6c135513dc38732
 
-### Bug fixes
-- Fixed a bug that ABTesting is not working.
+Improvements
+Improve push handling for Android.
+Bug fixes
+Fix issue of JSON library.
 
-## Release v1.8.0.0 (May 22, 2014 / File MD5: 4d0c155fdd95d11a8f5e4945f2805539)
-### New features
-- Server code execution
-- Counting objects in bucket
-- Analytics Async APIs
-- Site SG is available.
 
-### Improvements
-- Way to initialize SDK has changed.
-- Http Client is changed from HttpWebRequest to Unity WWW.
-- Cloud SDK and Analytics SDK has been merged.
-- Sending x-kii-sdk header (for internal use.)
-- WebPlayer is supported.
-- Code Stripping is supported.
-- Async callback are called from the UI thread.
-- Blocking APIs are deprecated.
-- KiiObjectBodyDownloadCallback is deprecated (use KiiObjectBodyProgressCallback instead.)
+v2.1.1 (8 Sep, 2014)
 
-## Release v1.7.0.0 (April 24, 2014 / File MD5: 2f221d84770e7e1935254acf9c379590)
-### New features
-- Push Notification
+md5: 6b7d3b8bbbf4a305d39301e322a0e9ee
 
-### Improvements
-- CloudException#ToString() shows longer error message received from server.
+New features
+Pseudo user. This features enable KiiUser registration without identity(username,email,phone number) and password.
+Access token expiration setting API for KiiUser authentication.
+Improvements
+Fix issue of updating user state after register.
 
-## Release v1.6.1.0 (March 26, 2014 / File MD5: 2e679d58d5cce441bce97c17f6cc9471)
-This SDK is hotfix of v1.6.0.0
-Fixed Facebook login problem.
 
-## Release v1.6.0.0 (March 20, 2014 / File MD5: 65134937d3a35fb1dc0cc5bbaa0f3386)
-### New Feature
-- Upload/ Download/ Delete/ Publish Object body.
-Now you can attach arbitrary data to the object. (binary file, etc.)
+v2.1.0.0 (Aug 13, 2014)
 
-## Release v1.5.0.0 (Feburary 28, 2014 / File MD5: 6b52eccdff90d38e1467be828ead91fc)
-### New Feature
-- AB Testing
-- Now Cloud SDK contains Analytics SDK.
+md5: 921cbfd26e80681d2f6a0f22aca36e61
 
-### Bug Fix
-- Fixed Async API issue in iOS.
+Improvements
+Enable to get ID of KiiUser/KiiGroup and instantiate them from ID.
 
-## Release v1.4.0.0 (January 28, 2014 / File MD5: c1c83ad8d560504361fe694ecdea3742)
 
-### New API
-- Add APIs enable login with Facebook Token.
+v2.0.0.0 (Jul 23, 2014)
 
-## Release v1.3.0.0 (December 13, 2013 / File MD5: 24c9eff8e0903bfe6469c916fc8d0378)
+md5: 91ca9875e6b66512eb12660b85a79c96
 
-### New API
-- Add asynchronous APIs.
-- Introduce new Exceptions which inherit the CloudException.
+New features
+Create KiiObject with specified ID
+Add RandomVariationSampler for AB testing.
+AB testing is now easily introduced without user sign-up.
+Improvements
+Implement KiiUser#Equals() 
+user have same ID is regarded as same.
+Improve push type handling.
+Bug fixes
+Fix issue of removing user from KiiGroup
 
-### Improvement
-- CloudException#ToString() shows server error response.
-- Change KiiGroup#ListMembers return type from List<T> to IList<T>.
 
-## Release v1.2.0.0 (November 7, 2013 / File MD5: 0c5bc31a889ee6538e043fa56e3abe38)
+v1.9.1.0 (Jun 25, 2014)
 
-### New API
-- Set/get Geo location of KiiObject.
-- Query objects with a given GeoBox.
-- Query objects with a given GeoDistance.
+md5: aaf9eb60d6df4593e313416cd6a7949d
 
-### Improvement
-- Add Kii servers as trusted root.
+Bug fixes
+Fixed a bug that IllegalKiiBaseObjectFormatException occurs when calling KiiObject.GetDouble.
 
-## Release v1.1.0.0 (September 19, 2013 / File MD5: 0f41d80f9f6fe67961a09d7413f76e30)
 
-China server is supported.
-If you want to use the server in China, please set 
-Kii.Site.CN to Kii.Initialize.
+v1.9.0.0 (Jun 13, 2014)
 
-## Release v1.0.0.0 (August 21, 2013 / File MD5: 7d26e00b9fc92fac4601319caa968bd4)
+md5: 6fc9836a8a8856c84cbfbce953ccf263
+
+Improvements
+Specify default timeout of API via the KiiInitializeBehavior.
+Accept absence of ORIGIN in PUSHTOAPP through APNS.
+Implemented KiiACL#Equals(object) and KiiACLEntry#Equals(object) by comparing internal values.
+Suppress error log message 'You are trying to load data from a www stream which had the following error when downloading.'
+Bug fixes
+Fixed a bug that callback doesn't work when push registration is failed.
+
+
+v1.8.2.0 (May 29, 2014)
+
+md5: 4042c309d8ac1beb354cc50a6e64721e
+
+Bug fixes
+Assebmly Load failed on Web Player
+Object upload failed due to WWW cache (on iOS).
+Unable to send POST request which doesn't have body.
+Unable to find user with email address (on iOS).
+Proper sub class of CloudException was not thrown when request failed.
+Analytics event upload failed.
+KiiInitializeBehaviour was unable to accept Singapore site.
+
+
+v1.8.1.0 (May 23, 2014)
+
+md5: a9a3c6b375af2b0f23d173c56ae326cc
+
+Bug fixes
+Fixed a bug that ABTesting is not working.
+
+
+v1.8.0.0 (May 22, 2014)
+
+md5: 4d0c155fdd95d11a8f5e4945f2805539
+
+New features
+Server code execution
+Counting objects in bucket
+Analytics Async APIs
+Site SG is available.
+Improvements
+Way to initialize SDK has changed.
+Http Client is changed from HttpWebRequest to Unity WWW.
+Cloud SDK and Analytics SDK has been merged.
+Sending x-kii-sdk header (for internal use.)
+WebPlayer is supported.
+Code Stripping is supported.
+Async callback are called from the UI thread.
+Blocking APIs are deprecated.
+KiiObjectBodyDownloadCallback is deprecated (use KiiObjectBodyProgressCallback instead.)
+
+
+v1.7.0.0 (April 24, 2014)
+
+md5: 2f221d84770e7e1935254acf9c379590
+
+New features
+Push Notification
+Improvements
+CloudException#ToString() shows longer error message received from server.
+
+
+v1.6.1.0 (March 26, 2014)
+
+md5: 2e679d58d5cce441bce97c17f6cc9471
+
+This SDK is hotfix of v1.6.0.0 Fixed Facebook login problem.
+
+
+v1.6.0.0 (March 20, 2014)
+
+md5: 65134937d3a35fb1dc0cc5bbaa0f3386
+
+New features
+Upload/ Download/ Delete/ Publish Object body. Now you can attach arbitrary data to the object. (binary file, etc.)
+
+
+v1.5.0.0 (Feburary 28, 2014)
+
+md5: 6b52eccdff90d38e1467be828ead91fc
+
+New features
+AB Testing
+Now Cloud SDK contains Analytics SDK.
+Bug fixes
+Fixed Async API issue in iOS.
+
+
+v1.4.0.0 (January 28, 2014)
+
+md5: c1c83ad8d560504361fe694ecdea3742
+
+New features
+Add APIs enable login with Facebook Token.
+
+
+v1.3.0.0 (December 13, 2013)
+
+md5: 24c9eff8e0903bfe6469c916fc8d0378
+
+New features
+Add asynchronous APIs.
+Introduce new Exceptions which inherit the CloudException.
+Improvements
+CloudException#ToString() shows server error response.
+Change KiiGroup#ListMembers return type from List to IList.
+
+
+v1.2.0.0 (November 7, 2013)
+
+md5: 0c5bc31a889ee6538e043fa56e3abe38
+
+New features
+Set/get Geo location of KiiObject.
+Query objects with a given GeoBox.
+Query objects with a given GeoDistance.
+Improvements
+Add Kii servers as trusted root.
+
+
+v1.1.0.0 (September 19, 2013)
+
+md5: 0f41d80f9f6fe67961a09d7413f76e30
+
+China server is supported. If you want to use the server in China, please set Kii.Site.CN to Kii.Initialize.
+
+
+v1.0.0.0 (August 21, 2013)
+
+md5: 7d26e00b9fc92fac4601319caa968bd4
 
 Initial Release!
